@@ -1,11 +1,7 @@
 import type { NextConfig } from 'next';
 
-const isProd = process.env.NODE_ENV === 'production';
-
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  // Set basePath for GitHub Pages subpath hosting url
-  basePath: isProd ? '/Mnemonic-Spirits-' : '',
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -13,8 +9,6 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: false,
   },
   images: {
-    // Disable Next.js default server-side image optimization for static export
-    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -24,12 +18,10 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // Export directly as HTML/CSS/JS without Node.js server
-  output: 'export',
   transpilePackages: ['motion'],
   webpack: (config, { dev }) => {
     // HMR is disabled in AI Studio via DISABLE_HMR env var.
-    // Do not modifyâfile watching is disabled to prevent flickering during agent edits.
+    // Do not modify—file watching is disabled to prevent flickering during agent edits.
     if (dev && process.env.DISABLE_HMR === 'true') {
       config.watchOptions = {
         ignored: /.*/,
